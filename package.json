@@ -30,5 +30,18 @@
     "babel-preset-expo": "~8.1.0",
     "@babel/core": "^7.8.6"
   },
-  "private": true
+  "private": true,
+  "name": "mafia",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PartnersComp/Mafia.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PartnersComp/Mafia/issues"
+  },
+  "homepage": "https://github.com/PartnersComp/Mafia#readme",
+  "description": ""
 }

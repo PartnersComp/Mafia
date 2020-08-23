@@ -60,7 +60,7 @@ const Room = ({route,navigation}) =>{
     var a = Math.floor(100000 + Math.random() * 900000)
     let obj={}
     obj[route.params.id] = route.params.name;
-    var s=Firebase.database().ref('GameCodes/').push({name : roomName,code : a,owner : route.params.id,users : obj,status:-1})
+    var s=Firebase.database().ref('GameCodes/').push({name : roomName,code : a,owner : route.params.id,users : obj,status:-1,time : 2})
     s.update({id : s.key});
     let codeObj={};
     codeObj[s.key] = a;
@@ -120,7 +120,6 @@ export default function App() {
   };
 
   React.useEffect(() =>{
-    
     Firebase.auth().signInAnonymously();
     Firebase.auth().onAuthStateChanged((userToken) =>{
       var user={id : userToken.uid};

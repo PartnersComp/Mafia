@@ -3,24 +3,25 @@ import { Text, View,TextInput, TouchableOpacity } from 'react-native';
 import {Firebase} from '../context/Firebase';
 import {LoginContext} from '../context/LoginContext';
 
-export const TownHall =(props)=>{
+export const NoticeBoard =(props)=>{
 
     const [message,setMessage] = React.useState([]);
     const [typeMessage,setTypeMessage] = React.useState("");
     const {getUser} = React.useContext(LoginContext);
-
     const sendMessage = () =>{
-        var user = getUser();
-        Firebase.database().ref('GameCodes/'+props.gameKey+'/townMessage').push({message : typeMessage, user : {id : user.id,name : user.name}});
+        var user = getUser(); 
+        Firebase.database().ref('GameCodes/'+props.gameKey+'/'+ (props.place == 'th' ? 'townMessage' : 'mafiaMansion')).push({message : typeMessage, user : {id : user.id,name : user.name}});
         setTypeMessage("");
     }
-    Firebase.database().ref('GameCodes/'+props.gameKey+'/townMessage').once('value').then((gameShot)=>{
-        var messageArray = gameShot.val() ? Object.values(gameShot.val()) : [];
-        setMessage(messageArray);
-    });
+    React.useEffect(()=>{
+        Firebase.database().ref('GameCodes/'+props.gameKey+'/'+(props.place == 'th' ? 'townMessage' : 'mafiaMansion')).on('value',(gameShot)=>{
+            var messageArray = gameShot.val() ? Object.values(gameShot.val()) : [];
+            setMessage(messageArray);
+        });
+    },[]);
     return (
         <View>
-             <Text>Townhall</Text>
+             <Text>{props.place == 'th' ? 'Town Hall' : 'Mafia Mansion'}</Text>
               <View>
                 {
                     message.map((item) =>{

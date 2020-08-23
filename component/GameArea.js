@@ -15,9 +15,9 @@ export const GameArea =()=>{
 
     const startGame = () =>{
         Firebase.functions().httpsCallable('startRoom')({gameKey : gameObj.id}).then(function(resp){
-            console.log(resp.data)
+            // console.log(resp.data)
         }).catch((resp) =>{
-            console.log(resp)
+            // console.log(resp)
         })
     }
 
@@ -34,7 +34,7 @@ export const GameArea =()=>{
             })
             Firebase.database().ref('GameCodes/'+gameKey+'/status').on('value',(snapshot) =>{
                 var sat = snapshot.val();
-                console.log(snapshot.val());
+                // console.log(snapshot.val());
                 if(sat == 1){
                     setGameWait(false);
                 }else{
