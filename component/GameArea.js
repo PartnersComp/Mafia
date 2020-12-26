@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button,Dimensions,TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image,TouchableOpacity } from 'react-native';
 import {Firebase} from '../context/Firebase';
 import {LoginContext} from '../context/LoginContext';
 import {GameConsole} from './GamesConsole';
@@ -15,9 +15,9 @@ export const GameArea =()=>{
 
     const startGame = () =>{
         Firebase.functions().httpsCallable('startRoom')({gameKey : gameObj.id}).then(function(resp){
-            console.log(resp.data)
+            // console.log(resp.data)
         }).catch((resp) =>{
-            console.log(resp)
+            // console.log(resp)
         })
     }
 
@@ -34,7 +34,7 @@ export const GameArea =()=>{
             })
             Firebase.database().ref('GameCodes/'+gameKey+'/status').on('value',(snapshot) =>{
                 var sat = snapshot.val();
-                console.log(snapshot.val());
+                // console.log(snapshot.val());
                 if(sat == 1){
                     setGameWait(false);
                 }else{
@@ -49,18 +49,27 @@ export const GameArea =()=>{
                 gameWait
                 ?
                     <View style={{flex:1,backgroundColor : 'black'}}>
-                        <View style={{height:100}}></View>
-                        <Text style={{color : 'white'}}>{gameObj.code}</Text>
-                        <Text style={{color : 'white'}}>{gameObj.name}</Text>
+                        <View style={{height : 20}}></View>
+                        <View style={styles.container}>
+                            <Image style={{width : 75,height : 75}} resizeMode="contain"source={require('../assets/white_mafia.png')}/>
+                        </View>
+                        <View style={{height : 20}}></View>
+                        <View style={{flexDirection : 'row'}}>
+                        <Text style={styles.headTextStyle}>Code : </Text><Text style={styles.textStyle}>{gameObj.code}</Text>
+                        </View>
+                        <View style={{flexDirection : 'row'}}>
+                        <Text style={styles.headTextStyle}>Name : </Text><Text style={styles.textStyle}>{gameObj.name}</Text>
+                        </View>
+                        <View style={{height : 20}}></View>
                         {
-                            gameObj.owner == user.id && <TouchableOpacity onPress={() =>{startGame()}}><Text style={{color : 'white'}}>Start</Text></TouchableOpacity>
+                            gameObj.owner == user.id && <TouchableOpacity onPress={() =>{startGame()}}><Text style={styles.headTextStyle}>Start</Text></TouchableOpacity>
                         }
                         <View style={{height : 30}}></View>
-                        <Text style={{color : 'white'}}>Users</Text>
+                        <Text style={styles.headTextStyle}>Users : {joinedUsers.length}</Text>
                         {
                             joinedUsers.map((item,index) =>{
                                 return (
-                                    <Text key={index} style={{color : 'white'}}>{item}</Text>
+                                    <Text key={index} style={[styles.textStyle,{paddingLeft : 10}]}>{item}</Text>
                                 )
                             })
                         }
@@ -72,3 +81,21 @@ export const GameArea =()=>{
        
     )
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'black',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    headTextStyle : {
+      fontWeight :'bold',
+      fontSize : 20,
+      color : 'white'
+    },
+    textStyle : {
+        fontSize : 20,
+        color : 'white'
+    }
+});
