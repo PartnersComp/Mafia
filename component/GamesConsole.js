@@ -126,6 +126,17 @@ export const GameConsole =()=>{
             <View style={{flexDirection : 'row'}}>
                 <TouchableOpacity onPress={() => openWindow('info')}><FIcon size={20} name="info" style={{color : 'white',paddingLeft : 20}}/></TouchableOpacity>
                 <View style={{flexGrow : 1}}></View>
+                <View style={{justifyContent : 'center'}}>
+                {
+                dayType == 0 ?
+                    <Text style={{color : 'white'}}>Game Over</Text>
+                : 
+                    <View>
+                        <Text style={{color : 'white'}}>{timer}</Text>
+                    </View>
+                }
+                </View>
+                <View style={{flexGrow : 1}}></View>
                 <TouchableOpacity onPress={() => openWindow('nt')}><FIcon size={20} name="envelope-o" style={{color : 'white',paddingRight : 20}}/></TouchableOpacity>
             </View>
             
@@ -143,7 +154,11 @@ export const GameConsole =()=>{
                 <View style={{flexGrow : 1}}></View>
                 <TouchableOpacity onPress={() => openWindow('h')}><FIcon size={fsize} name="hospital-o" style={{color : 'white',paddingRight : 20}}/></TouchableOpacity>
             </View>
-            <View style={{height : 80}}></View>
+            <View style={{height : 40}}></View>
+            <View style={{flexDirection : 'row',justifyContent : 'center'}}>
+               <FIcon size={25} name={dayType == -1 ? 'moon-o ' : 'sun-o'} style={{color : dayType == -1 ? 'white' : 'yellow'}}/>
+            </View>
+            <View style={{height : 40}}></View>
             <View style={{flexDirection : 'row'}}>
                 <TouchableOpacity onPress={() => openWindow('ps')}><FIcon size={fsize} name="taxi" style={{color : 'white',paddingLeft : 20}}/></TouchableOpacity>
                 <View style={{flexGrow : 1}}></View>
@@ -154,9 +169,6 @@ export const GameConsole =()=>{
                 <TouchableOpacity onPress={() => openWindow('vh')}><FIcon size={fsize} name="sitemap" style={{color : 'white'}}/></TouchableOpacity>
             </View>
             <View style={{height : 20}}></View>
-            <View style={{height : 20}}></View>
-            <View style={{height : 20}}></View>
-            <TouchableOpacity onPress={() => openWindow('nt')}><Text style={{color : 'white'}}>Notice</Text></TouchableOpacity>
             <View style={{height : 20}}></View>
             <View style={{height : 20}}></View>
             {
